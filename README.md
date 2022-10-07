@@ -1,5 +1,14 @@
 # LightBnB
 
+## Screenshots
+Screenshot for home page 
+!["Screenshot for home page "](https://github.com/Ruanruanx/LightBnB/blob/main/pics/Screenshot%20from%202022-10-07%2010-25-14.png?raw=true)
+
+Screenshot for search page
+!["Screenshot for search page"](https://github.com/Ruanruanx/LightBnB/blob/main/pics/Screenshot%20from%202022-10-07%2010-58-35.png?raw=true)
+
+Screenshot for login page
+!["Screenshot for login page"](https://github.com/Ruanruanx/LightBnB/blob/main/pics/Screenshot%20from%202022-10-07%2010-58-35.png?raw=true)
 ## Project Structure
 
 ```
