@@ -133,7 +133,7 @@ const getAllProperties = (options, limit = 10) => {
   `;
 
   // 3
-  if (options) {
+  if (options.length>1) {
     queryString += `WHERE`;
   }
 
