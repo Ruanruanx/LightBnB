@@ -133,30 +133,35 @@ const getAllProperties = (options, limit = 10) => {
   `;
 
   // 3
-  if (options.length>1) {
-    queryString += `WHERE`;
-  }
 
   if (options.city) {
     queryParams.push(`%${options.city}%`);
-    queryString += ` city LIKE $${queryParams.length} `;
+    queryString += `WHERE city LIKE $${queryParams.length} `;
   }
   if (options.owner_id) {
     queryParams.push(`${options.owner_id}`);
-    queryString += ` owner_id = $${queryParams.length} `;
+    if (queryParams.length > 1) {
+      queryString += `AND owner_id = $${queryParams.length} `;
+    } else {
+      queryString += `WHERE owner_id = $${queryParams.length} `;
+    }
   }
   if (options.minimum_price_per_night) {
     queryParams.push(`${options.minimum_price_per_night}` * 100);
-    if (options.city)
-      if (queryParams.length > 1)
-        queryString += ` and `;
-    queryString += ` cost_per_night > $${queryParams.length} `;
+    if (queryParams.length > 1) {
+      queryString += ` AND cost_per_night > $${queryParams.length}`;
+    } else {
+      queryString += ` WHERE cost_per_night > $${queryParams.length} `;
+    }
   }
   if (options.maximum_price_per_night) {
     queryParams.push(`${options.maximum_price_per_night}` * 100);
-    if (queryParams.length > 1)
-      queryString += ` and `;
-    queryString += `cost_per_night < $${queryParams.length} `;
+    if (queryParams.length > 1) {
+      queryString += ` AND cost_per_night < $${queryParams.length}`;
+    } else {
+      queryString += `WHERE cost_per_night < $${queryParams.length} `;
+    }
+
   }
 
   // 4
@@ -210,21 +215,21 @@ const addProperty = function(property) {
     parking_spaces,
     number_of_bathrooms,
     number_of_bedrooms) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)`
-  const queryParams=[property.owner_id,
-    property.title,
-    property.description,
-    property.thumbnail_photo_url,
-    property.cover_photo_url,
-    property.cost_per_night,
-    property.street,
-    property.city,
-    property.province,
-    property.post_code,
-    property.country,
-    property.parking_spaces,
-    property.number_of_bathrooms,
-    property.number_of_bedrooms]
+  const queryParams = [property.owner_id,
+  property.title,
+  property.description,
+  property.thumbnail_photo_url,
+  property.cover_photo_url,
+  property.cost_per_night,
+  property.street,
+  property.city,
+  property.province,
+  property.post_code,
+  property.country,
+  property.parking_spaces,
+  property.number_of_bathrooms,
+  property.number_of_bedrooms]
 
-  return pool.query(queryString,queryParams).then((res) => res.rows);
+  return pool.query(queryString, queryParams).then((res) => res.rows);
 }
 exports.addProperty = addProperty;
